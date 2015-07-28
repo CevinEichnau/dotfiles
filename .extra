@@ -1,0 +1,228 @@
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
+
+##### Aliases
+
+# Screen Saver
+
+alias bye='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine'
+
+# Path to Repositories
+alias repop='cd ~/repositories/PHP'
+alias repor='cd ~/repositories/Rails'
+alias repoa='cd ~/repositories/Android'
+
+function __getj() {
+    GET "$@" | python -mjson.tool
+}
+
+alias GETJ='__getj'
+
+
+alias svng="svn st | grep ^[A\|M] | cut -d' ' -f8- > targets.txt"
+
+alias clean='sudo php app/console assets:install; sudo php app/console assetic:dump; cleanup;'
+alias jobb='~/Downloads/adt-bundle-mac-x86_64-20140702/sdk/tools/jobb'
+alias fastboot='~/Downloads/adt-bundle-mac-x86_64-20140702/sdk/platform-tools/fastboot'
+
+alias repach='sudo apachectl stop; sudo apachectl start'
+
+alias cleanup='sudo rm -R app/cache; sudo rm -R app/logs'
+
+alias subl='open -a ~/../../Applications/Sublime\ Text\ 2.app'
+
+alias edit_alias='nano ~/.extra'
+
+alias ll='ls -lGaf'
+
+function __dash {
+  com="";
+  prefix="dash://";
+  i=0;
+  for var in "$@"
+  do
+    if [ "$i" == 0 ] ; then
+      prefix="dash://"$var\ ;
+      if [ $var == "php" ] ; then prefix="dash://"$var: ; fi
+      if [ $var == "ruby" ] ; then prefix="dash://"$var: ; fi
+      if [ $var == "rails" ] ; then prefix="dash://"$var: ; fi
+      if [ $var == "symfony" ] ; then prefix="dash://"$var: ; fi
+      if [ $var == "java" ] ; then prefix="dash://"$var: ; fi
+      if [ $var == "android" ] ; then prefix="dash://"$var: ; fi
+    fi
+    if [ "$i" != 0 ] ; then com+=$var\ ; fi
+    i+=1;
+  done
+  open "$prefix""$com";
+}
+
+alias dash='__dash'
+
+##### Git
+
+GIT_AUTHOR_NAME="Cevin Eichnau"
+GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+git config --global user.name "$GIT_AUTHOR_NAME"
+GIT_AUTHOR_EMAIL="cevin@eichnau.com"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
+
+
+###### Jokes
+
+alias matrix='echo -e "1"; while $t; do for i in `seq 1 30`;do r="$[($RANDOM % 2)]";h="$[($RANDOM % 4)]";if [ $h -eq 1 ]; then v="0 $r";else v="1 $r";fi;v2="$v2 $v";done;echo -e $v2;v2="";done;'
+
+###### Symfony2
+
+_symfony_console () {
+  echo "php $(find . -maxdepth 2 -mindepth 1 -name 'console' -type f | head -n 1)"
+}
+
+_symfony2_get_command_list () {
+   `_symfony_console` --no-ansi | sed "1,/Available commands/d" | awk '/^  ?[a-z]+/ { print $1 }'
+}
+
+_symfony2 () {
+   compadd `_symfony2_get_command_list`
+}
+
+#Alias
+alias sf='`_symfony_console`'
+alias sfcl='sf cache:clear'
+alias sfsr='sf server:run -vvv'
+alias sfcw='sf cache:warmup'
+alias sfroute='sf router:debug'
+alias sfcontainer='sf container:debug'
+alias sfgb='sf generate:bundle'
+
+
+
+
+###### Jira
+
+open_jira_issue () {
+  local open_cmd
+  if [[ "$OSTYPE" = darwin* ]]; then
+    open_cmd='open'
+  else
+    open_cmd='xdg-open'
+  fi
+
+  jira_url="http://jira.bornholdtlee.de";
+
+  if [ -f .jira-prefix ]; then
+    jira_prefix=$(cat .jira-prefix)
+  elif [ -f ~/.jira-prefix ]; then
+    jira_prefix=$(cat ~/.jira-prefix)
+  else
+    jira_prefix=""
+  fi
+
+  if [ -z "$1" ]; then
+    echo "Opening new issue"
+    $open_cmd "${jira_url}/secure/CreateIssue!default.jspa"
+  elif [[ "$1" = "assigned" || "$1" = "reported" ]]; then
+    jira_query $@
+  else
+    local addcomment=''
+    if [[ "$2" == "m" ]]; then
+      addcomment="#add-comment"
+      echo "Add comment to issue #$1"
+    else
+      echo "Opening issue #$1"
+    fi
+
+    if [[ "x$JIRA_RAPID_BOARD" = "xtrue" ]]; then
+      $open_cmd  "$jira_url/issues/$jira_prefix$1$addcomment"
+    else
+      $open_cmd  "$jira_url/browse/$jira_prefix$1$addcomment"
+    fi
+  fi
+}
+
+jira_name () {
+  if [[ -z "$1" ]]; then
+    if [[ "x${JIRA_NAME}" != "x" ]]; then
+      jira_name=${JIRA_NAME}
+    else
+      echo "JIRA_NAME not specified"
+      return 1
+    fi
+  else
+    jira_name=$@
+  fi
+}
+
+jira_query () {
+    verb="$1"
+    if [[ "${verb}" = "reported" ]]; then
+      lookup=reporter
+      preposition=by
+    elif [[ "${verb}" = "assigned" ]]; then
+      lookup=assignee
+      preposition=to
+    else
+      echo "not a valid lookup $verb"
+      return 1
+    fi
+    shift 1
+    jira_name $@
+    if [[ $? = 1 ]]; then
+        return 1
+    fi
+    echo "Browsing issues ${verb} ${preposition} ${jira_name}"
+    $open_cmd "${jira_url}/secure/IssueNavigator.jspa?reset=true&jqlQuery=${lookup}+%3D+%22${jira_name}%22+AND+resolution+%3D+unresolved+ORDER+BY+priority+DESC%2C+created+ASC"
+}
+
+alias jira='open_jira_issue'
+
+
+
+####### Composer
+
+_composer_get_command_list () {
+    $_comp_command1 --no-ansi | sed "1,/Available commands/d" | awk '/^[ \t]*[a-z]+/ { print $1 }'
+}
+
+_composer_get_required_list () {
+    $_comp_command1 show -s --no-ansi | sed '1,/requires/d' | awk 'NF > 0 && !/^requires \(dev\)/{ print $1 }'
+}
+
+_composer () {
+  local curcontext="$curcontext" state line
+  typeset -A opt_args
+  _arguments \
+    '1: :->command'\
+    '*: :->args'
+
+  case $state in
+    command)
+      compadd $(_composer_get_command_list)
+      ;;
+    *)
+      compadd $(_composer_get_required_list)
+      ;;
+  esac
+}
+
+# Aliases
+alias composer='composer'
+alias composersu='composer self-update'
+alias composeru='composer update'
+alias composerr='composer require'
+alias composeri='composer install'
+alias composercp='composer create-project'
+alias composerdu='composer dump-autoload'
+alias composergu='composer global update'
+alias composergr='composer global require'
+
+alias composerget='curl -s https://getcomposer.org/installer | php'
+
+export PATH=$PATH:~/.composer/vendor/bin
+
+##### Copy current dir to clipboard
+
+alias copydir='pwd | tr -d "\r\n" | pbcopy'
+
+
+
+
