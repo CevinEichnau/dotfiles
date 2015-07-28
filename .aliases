@@ -249,7 +249,7 @@ open_jira_issue () {
     open_cmd='xdg-open'
   fi
 
-  jira_url="http://jira.bornholdtlee.de";
+  jira_url="{YOUR JIRA URL}";
 
   if [ -f .jira-prefix ]; then
     jira_prefix=$(cat .jira-prefix)
