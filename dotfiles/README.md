@@ -32,7 +32,7 @@ You could also use `~/.extra` to override settings, functions and aliases from m
 
 ![Image](http://imgur.com/loRXiZY)
 
-Use the Visor.terminal in `~/dotfiles/init/Visor.terminal`,
+Use the Visor.terminal in `~/dotfiles/init/Visor.terminal`.
 
 ### Install Homebrew formulae
 
