@@ -184,11 +184,7 @@ fi;
 PS1="\[\033]0;\w\007\]";
 PS1+="\[${bold}\]\n"; # newline
 
-if [ $USER != "ceichnau" ]; then
-PS1+="\[${userStyle}\]\u"; # username
-else
-PS1+="\[${userStyle}\]CevinEichnau 🙈 "; # username
-fi;
+PS1+="\[${userStyle}\]\u 🙈"; # username
 
 PS1+="\[${white}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host

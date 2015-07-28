@@ -28,6 +28,12 @@ If `~/.extra` exists, it will be sourced along with the other files. You can use
 
 You could also use `~/.extra` to override settings, functions and aliases from my dotfiles repository.
 
+### Theme
+
+![Image](http://imgur.com/loRXiZY)
+
+Use the Visor.terminal in `~/dotfiles/init/Visor.terminal`.
+
 ### Install Homebrew formulae
 
 When setting up a new Mac, you may want to install some common [Homebrew](http://brew.sh/) formulae (after installing Homebrew, of course):
