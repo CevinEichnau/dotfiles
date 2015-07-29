@@ -16,6 +16,14 @@ else
 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
 	echo "";
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		read -p "Are you use Jira? (y/n) " -n 1;
+	  echo "";
+	  if [[ $REPLY =~ ^[Yy]$ ]]; then
+	  	read -p "Jira URL?: " -n 1;
+	    echo "";
+			echo $($REPLY) >> ~/.bash_jira_config.txt
+	  fi;
+
 		doIt;
 	fi;
 fi;
