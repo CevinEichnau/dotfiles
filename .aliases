@@ -249,7 +249,8 @@ open_jira_issue () {
     open_cmd='xdg-open'
   fi
 
-  jira_url="EDIT_THE_JIRA_URL_AT_LINE_252_IN_~/.aliases";
+	value=
+  jira_url=$("cat ~/.bash_jira_config");
 
   if [ -f .jira-prefix ]; then
     jira_prefix=$(cat .jira-prefix)
