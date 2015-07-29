@@ -250,7 +250,7 @@ open_jira_issue () {
   fi
 
 	value=
-  jira_url=$("cat ~/.bash_jira_config");
+  jira_url=$(cat ~/.bash_jira_config);
 
   if [ -f .jira-prefix ]; then
     jira_prefix=$(cat .jira-prefix)
