@@ -19,9 +19,9 @@ else
 		read -p "Are you use Jira? (y/n) " -n 1;
 	  echo "";
 	  if [[ $REPLY =~ ^[Yy]$ ]]; then
-	  	read -p "Jira URL?: " -n 1;
+	  	read -p "Jira URL?: ";
 	    echo "";
-			echo $($REPLY) >> ~/.bash_jira_config.txt
+			echo "$REPLY" >> ~/.bash_jira_config
 	  fi;
 
 		doIt;
