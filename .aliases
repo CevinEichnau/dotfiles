@@ -263,7 +263,7 @@ open_jira_issue () {
   if [ -z "$1" ]; then
     echo "Opening new issue"
     $open_cmd "${jira_url}/secure/CreateIssue!default.jspa"
-  elif [[ "$1" = "assigned" || "$1" = "reported" ]]; then
+  elif [[ "$1" = "-a" || "$1" = "-r" ]]; then
     jira_query $@
   else
     local addcomment=''
@@ -297,10 +297,10 @@ jira_name () {
 
 jira_query () {
     verb="$1"
-    if [[ "${verb}" = "reported" ]]; then
+    if [[ "${verb}" = "-r" ]]; then
       lookup=reporter
       preposition=by
-    elif [[ "${verb}" = "assigned" ]]; then
+    elif [[ "${verb}" = "-a" ]]; then
       lookup=assignee
       preposition=to
     else
@@ -312,8 +312,9 @@ jira_query () {
     if [[ $? = 1 ]]; then
         return 1
     fi
-    echo "Browsing issues ${verb} ${preposition} ${jira_name}"
-    $open_cmd "${jira_url}/secure/IssueNavigator.jspa?reset=true&jqlQuery=${lookup}+%3D+%22${jira_name}%22+AND+resolution+%3D+unresolved+ORDER+BY+priority+DESC%2C+created+ASC"
+    echo "Browsing issues ${lookup} ${preposition} ${jira_name}"
+    jira_name=$(echo ${jira_name} | sed 's/ /%20/g' )
+		$open_cmd "${jira_url}/secure/IssueNavigator.jspa?reset=true&jqlQuery=${lookup}%3D%22${jira_name}%22%20AND%20status%3D%221%22%20%20ORDER%20BY%20priority%20DESC%2C%20created%20ASC"
 }
 
 alias jira='open_jira_issue'
