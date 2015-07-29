@@ -1,5 +1,8 @@
 # Cevin’s dotfiles
 
+## Wiki
+[Wiki describes some Funktions](https://github.com/CevinEichnau/dotfiles/wiki)
+
 ## Installation
 
 ### Using Git and the bootstrap script
