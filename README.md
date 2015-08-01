@@ -33,7 +33,7 @@ You could also use `~/.extra` to override settings, functions and aliases from m
 
 ### Theme
 
-![Image](http://i.imgur.com/loRXiZY.png)
+![Image](http://eichnau.com/images/uploads/55bc8c1c985e6_Bildschirmfoto%202015-08-01%20um%2011.05.42.png)
 
 Use the Visor.terminal in `~/dotfiles/init/Visor.terminal`.
 
