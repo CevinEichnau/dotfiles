@@ -1,5 +1,7 @@
 # Cevin’s dotfiles
 
+[![Join the chat at https://gitter.im/CevinEichnau/dotfiles](https://badges.gitter.im/CevinEichnau/dotfiles.svg)](https://gitter.im/CevinEichnau/dotfiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Wiki
 [Wiki describes some Funktions](https://github.com/CevinEichnau/dotfiles/wiki)
 
