@@ -5,6 +5,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
+alias www="cd /var/www"
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 # Shortcuts
 alias d="cd ~/Documents/Dropbox"
@@ -356,4 +358,3 @@ export PATH=$PATH:~/.composer/vendor/bin
 ##### Copy current dir to clipboard
 
 alias copydir='pwd | tr -d "\r\n" | pbcopy'
-
